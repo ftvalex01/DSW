@@ -22,3 +22,11 @@ Route::get('/home', function () {
     return view('home');
  })->middleware(['auth', 'verified'])->name('home');
 
+
+ //Una para mostrar todos los enlaces que llamará al método index del controlador mediante GET 
+Route::get('community', [App\Http\Controllers\CommunityLinkController::class, 'index']);
+
+
+
+//Otra para crear un link que llamará al método store del controlador mediante POST:
+Route::post('community', [App\Http\Controllers\CommunityLinkController::class, 'store']);
