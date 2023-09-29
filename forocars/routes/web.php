@@ -18,6 +18,7 @@ Route::get('/', function () {
 });
 
 Auth::routes(['verify' => 'true']);
+
 Route::get('/home', function () {
     return view('home');
  })->middleware(['auth', 'verified'])->name('home');
@@ -29,4 +30,5 @@ Route::get('community', [App\Http\Controllers\CommunityLinkController::class, 'i
 
 
 //Otra para crear un link que llamará al método store del controlador mediante POST:
-Route::post('community', [App\Http\Controllers\CommunityLinkController::class, 'store']);
+Route::post('community', [App\Http\Controllers\CommunityLinkController::class, 'store'])
+->middleware('auth');
