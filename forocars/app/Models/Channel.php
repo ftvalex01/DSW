@@ -13,4 +13,5 @@ class Channel extends Model
         'slug',
         'color'
     ];
+   
 }
