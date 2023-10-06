@@ -42,8 +42,12 @@ class CommunityLinkController extends Controller
         $data['approved'] = $approved ;
 
         CommunityLink::create($data);
-
-        return back();
+        if($approved === true){
+            return back()->with('success','Item created successfully!');
+        }else{
+            return back()->with('success','object successfully created, waiting for a moderator to accept it');
+        }
+        
     }
 
     /**

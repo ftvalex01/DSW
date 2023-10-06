@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        @include('errors/flash-message')
         <div class="row">
             {{-- Left colum to show all the links in the DB --}}
             <div class="col-md-8">
