@@ -13,7 +13,7 @@ class CommunityLinkController extends Controller
      */
     public function index()
     {
-        $links = CommunityLink::paginate(25);
+        $links = CommunityLink::where('approved', 1)->paginate(25);
         $channels = Channel::orderBy('title','asc')->get();
         
         return view('community/index', compact('links','channels'));
@@ -37,9 +37,9 @@ class CommunityLinkController extends Controller
             'channel_id' => 'required|exists:channels,id',
             'link' => 'required|unique:community_links|url|max:255',
         ]);
-
+        $approved = Auth::user()->isTrusted();
         $data['user_id'] = Auth::id();
-
+        $data['approved'] = $approved ;
 
         CommunityLink::create($data);
 

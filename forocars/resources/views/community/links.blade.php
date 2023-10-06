@@ -1,3 +1,8 @@
+@if(count($links) === 0)
+    
+<p>No approved contributions yet</p>
+
+@endif
 @foreach ($links as $link)
 
 <li>

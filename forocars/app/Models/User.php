@@ -42,4 +42,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    function isTrusted(){
+        
+        return $this -> trusted;
+    }
 }
