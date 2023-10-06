@@ -6,6 +6,7 @@ use App\Models\CommunityLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class CommunityLinkController extends Controller
 {
     /**
