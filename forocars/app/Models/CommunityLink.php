@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class CommunityLink extends Model
 {
@@ -13,7 +13,8 @@ class CommunityLink extends Model
         'channel_id',
         'title',
         'link',
-        'approved'
+        'approved',
+        
     ];
     public function creator()
     {
@@ -23,5 +24,15 @@ class CommunityLink extends Model
     {
         return $this->belongsTo(Channel::class, 'channel_id');
     }
-
+    protected static function hasAlreadyBeenSubmitted($link)
+    {
+        if ($existing = static::where('link', $link)->first()) {
+            if (Auth::user()->isTrusted() || !Auth::user()->isTrusted() && $existing['approved'] == 0) {
+                $existing->touch();
+                $existing->save();
+            }
+            return true;
+        }
+        return false;
+    }
 }
