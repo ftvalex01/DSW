@@ -1,4 +1,7 @@
- {{-- Right colum to show the form to upload a link --}}
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/add-link.css') }}" >
+</head>
+
  <div class="col-md-4">
      <div class="card">
          <div class="card-header">

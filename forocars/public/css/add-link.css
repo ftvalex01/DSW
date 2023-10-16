@@ -1,0 +1,26 @@
+h3{
+    font-family: Impact, Charcoal, sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.8px;
+    word-spacing: 2.6px;
+    color: #000000;
+    font-weight: 400;
+    text-decoration: none solid rgb(68, 68, 68);
+    font-style: normal;
+    font-variant: normal;
+    text-transform: capitalize;
+    text-align: center;
+}
+label{
+    font-family: Impact, Charcoal, sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.8px;
+    word-spacing: 2.6px;
+    color: #000000;
+    font-weight: 400;
+    text-decoration: none solid rgb(68, 68, 68);
+    font-style: normal;
+    font-variant: normal;
+    text-transform: capitalize;
+    text-align: center; 
+}
