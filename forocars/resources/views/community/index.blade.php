@@ -2,18 +2,18 @@
 
 @section('content')
     <div class="container">
-        @include('errors/flash-message')
         <div class="row">
-            {{-- Left colum to show all the links in the DB --}}
+            {{-- Left column to show all the links in the DB --}}
             <div class="col-md-8">
-                <h1>Community</h1>
-              @include('./community/links')
+                <a href="/community" style="text-decoration: none; color:inherit">
+                    <h1>Community <span style="color: {{ $channel ? $channel->color : 'inherit' }}">{{ $channel ? $channel->title : '' }}</span></h1>
+                </a>
+                @include('./community/links')
             </div>
             @auth
                @include('./community/add-link')
             @endauth
-            </div>
         </div>
-        {{ $links->links() }}
     </div>
 @stop
+
