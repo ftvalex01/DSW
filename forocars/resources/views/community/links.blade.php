@@ -10,18 +10,20 @@
 
 @endif
 <ul class="list-group">
-@foreach ($links as $link)
-
+    @foreach ($links as $link)
     <li class="list-group-item border-radius hvr-sweep-to-right mt-2"> 
-        
-        <span  class="me-2 label text-aling-center p-1 border-radius channel label-default" style="background: {{ $link->channel->color }}">
+        <span class="me-2 label text-aling-center p-1 border-radius channel label-default" style="background: {{ $link->channel->color }}">
             <a class="text-decoration-none" href="/community/{{ $link->channel->slug }}">
-            {{ $link->channel->title }}
-        </span>
-            <a href="{{ $link->link }}" target="_blank">
-                {{ $link->title }}
+                {{ $link->channel->title }}
             </a>
+        </span>
+        <a href="{{ $link->link }}" target="_blank">
+            {{ $link->title }}
+        </a>
         <small>Contributed by: <span class="black-text">{{ $link->creator->name }}</span> {{ $link->updated_at->diffForHumans() }}</small>
+        
     </li>
+    <p class="votes">Votos: {{ $link->users->count() }}</p>
 @endforeach
+
 </ul>

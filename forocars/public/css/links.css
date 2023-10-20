@@ -36,3 +36,8 @@
   .hvr-sweep-to-right:hover:before {
     transform: scaleX(1);
   }
+  .votes {
+    margin-left: auto; 
+    color: #010408; 
+    font-weight: bold;
+}
