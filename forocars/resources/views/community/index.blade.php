@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+
     <div class="container">
         <div class="row">
+            @include('errors/flash-message')
             {{-- Left column to show all the links in the DB --}}
             <div class="col-md-8">
                 <a href="/community" style="text-decoration: none; color:inherit">
