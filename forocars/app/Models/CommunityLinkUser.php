@@ -5,17 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Channel extends Model
+class CommunityLinkUser extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'title',
-        'slug',
-        'color'
+        'user_id',
+        'community_link_id',
     ];
-    public function communitylinks()
-    {
-       return $this->hasMany(CommunityLink::class);
-    }
+    
     
 }
