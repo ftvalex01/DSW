@@ -29,6 +29,8 @@ class CommunityLink extends Model
     {
     return $this->belongsToMany(User::class, 'community_link_users');
     }
+  
+
     public static function hasAlreadyBeenSubmitted($link)
     {
         if ($existing = static::where('link', $link)->first()) {
@@ -40,4 +42,5 @@ class CommunityLink extends Model
         }
         return false;
     }
+    
 }

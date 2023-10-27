@@ -7,28 +7,31 @@ use App\Models\CommunityLink;
 use App\Http\Requests\CommunityLinkForm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\Queries\CommunityLinksQuery;
 
 class CommunityLinkController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    private $communityLinksQuery;
+
+    public function __construct(CommunityLinksQuery $communityLinksQuery)
+    {
+        $this->communityLinksQuery = $communityLinksQuery;
+    }
+
     public function index(Channel $channel = null)
     {
-
         $channels = Channel::orderBy('title', 'asc')->get();
 
-        if ($channel != null) {
+        
+        $popular = request()->exists('popular');
+        $links = $this->communityLinksQuery->getByChannel($channel, $popular);
 
-            $links = $channel -> communitylinks()->where('approved', true)->where('channel_id', $channel->id) ->latest('updated_at')->paginate(25);
-            
-        } else {
-            $links = CommunityLink::where('approved', true)->latest('updated_at')->paginate(25);
-        }
-
-        return view('community/index', compact('links', 'channels', 'channel'));
+       
+        return view('community/index', compact('links', 'channels', 'channel'))
+            ->with('popular', $popular);
     }
+    
+ 
 
     /**
      * Show the form for creating a new resource.
