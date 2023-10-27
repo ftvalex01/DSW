@@ -31,10 +31,10 @@ Route::get('community', [App\Http\Controllers\CommunityLinkController::class, 'i
 
 //Otra para crear un link que llamará al método store del controlador mediante POST:
 Route::post('community', [App\Http\Controllers\CommunityLinkController::class, 'store'])
-->middleware('auth');
+->middleware('auth','verified');
 
 // Ruta para filtrar por el channel que le venga como param.
 Route::get('community/{channel:slug}', [App\Http\Controllers\CommunityLinkController::class, 'index']);
 
 // Ruta para votar por el link
-Route::post('/votes/{link}',  [App\Http\Controllers\CommunityLinkUserController::class, 'store'])->middleware('auth');
+Route::post('/votes/{link}',  [App\Http\Controllers\CommunityLinkUserController::class, 'store'])->middleware('auth','verified');
