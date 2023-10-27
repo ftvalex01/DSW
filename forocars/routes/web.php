@@ -35,3 +35,6 @@ Route::post('community', [App\Http\Controllers\CommunityLinkController::class, '
 
 // Ruta para filtrar por el channel que le venga como param.
 Route::get('community/{channel:slug}', [App\Http\Controllers\CommunityLinkController::class, 'index']);
+
+// Ruta para votar por el link
+Route::post('/votes/{link}',  [App\Http\Controllers\CommunityLinkUserController::class, 'store'])->middleware('auth');

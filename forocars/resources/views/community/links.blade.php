@@ -21,8 +21,14 @@
             {{ $link->title }}
         </a>
         <small>Contributed by: <span class="black-text">{{ $link->creator->name }}</span> {{ $link->updated_at->diffForHumans() }}</small>
+        <form method="POST" action="/votes/{{ $link->id }}">
+            {{ csrf_field() }}
+            <button type="submit" class="btn btn-secondary {{ Auth::check() && Auth::user()->votedFor($link) ? 'btn-success' : 'btn-secondary' }}" {{ Auth::guest() ? 'disabled' : '' }}>
+                {{ $link->users()->count() }}
+            </button>
+            
+        </form>
         
-    </li>
     <p class="votes">Votos: {{ $link->users->count() }}</p>
 @endforeach
 
