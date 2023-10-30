@@ -7,7 +7,7 @@ use App\Models\CommunityLink;
 
 class CommunityLinksQuery
 {
-    public function getByChannel(Channel $channel = null, $popular = false)
+    public function getByChannel(Channel $channel = null, $popular = false, $search = null)
     {
         $query = CommunityLink::where('approved', true);
 
@@ -16,7 +16,7 @@ class CommunityLinksQuery
         }
 
         if ($popular) {
-            $query->withCount('users')->orderBy('users_count', 'desc');
+            $query->withCount('users')->orderBy('users_count', 'desc');     
         } else {
             $query->latest('updated_at');
         }
@@ -24,26 +24,31 @@ class CommunityLinksQuery
         return $query->paginate(5);
     }
 
-    public function getAll($popular = false)
+    public function getAll($popular = false, $search = null)
     {
-        return $this->getByChannel(null, $popular);
+        return $this->getByChannel(null, $popular, $search);
     }
 
-    public function getMostPopular()
+    public function getMostPopular($search = null)
     {
-        return $this->getByChannel(null, true);
-    }
-    public function getSearch($search = null){
-        if ($search) {
-            return CommunityLink::where(function ($query) use ($search) {
-                foreach ($search as $value) {
-                    $query->orWhere('title', 'LIKE', "%$value%");
-                }
-            })->paginate(5);
-        } else {
-            return back()->with('info', 'no hay coincidencias en tu búsqueda');
-        }
+        return $this->getByChannel(null, true, $search);
     }
     
+    public function getSearch($search = null, $popular = false)
+    {
+        $query = CommunityLink::where(function ($query) use ($search) {
+            foreach ($search as $value) {
+                $query->orWhere('title', 'LIKE', "%$value%");
+            }
+        });
+    
+        if ($popular) {
+            $query->withCount('users')->orderBy('users_count', 'desc');
+        } else {
+            $query->latest('updated_at');
+        }
+    
+        return $query->paginate(5);
     }
-
+    
+}

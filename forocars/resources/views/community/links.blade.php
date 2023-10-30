@@ -14,7 +14,10 @@
                 recent</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ request()->exists('popular') ? 'disabled' : '' }}" href="?popular">Most popular</a>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->exists('popular') ? 'disabled' : '' }}" href="?popular{{ request('search') ? '&search=' . request('search') : '' }}">Most popular</a>
+            </li>
+            
         </li>
     </ul>
     <ul class="list-group">

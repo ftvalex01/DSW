@@ -41,3 +41,21 @@
     color: #010408; 
     font-weight: bold;
 }
+
+/* Estilos para el formulario de búsqueda */
+.navbar-search .input-group {
+  width: 15rem; 
+}
+
+.navbar-search .form-control {
+  border-radius: 0; 
+}
+
+.navbar-search .btn {
+  border-radius: 0; 
+}
+
+
+.navbar-search .btn i {
+  color: #fff; 
+}

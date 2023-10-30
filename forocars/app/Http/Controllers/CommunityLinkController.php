@@ -29,15 +29,14 @@ class CommunityLinkController extends Controller
         if ($search) {
             $search = trim($search);
             $searchValues = preg_split('/\s+/', $search, -1, PREG_SPLIT_NO_EMPTY);
-            
-            $links = $this->communityLinksQuery->getSearch($searchValues);
-        } else if($search) {
+            $links = $this->communityLinksQuery->getSearch($searchValues, $popular);
+        } else {
             $links = $this->communityLinksQuery->getByChannel($channel, $popular);
         }
         
-    
         return view('community/index', compact('links', 'channels', 'channel'))
             ->with('popular', $popular);
+    
     }
     
     
