@@ -33,4 +33,17 @@ class CommunityLinksQuery
     {
         return $this->getByChannel(null, true);
     }
-}
+    public function getSearch($search = null){
+        if ($search) {
+            return CommunityLink::where(function ($query) use ($search) {
+                foreach ($search as $value) {
+                    $query->orWhere('title', 'LIKE', "%$value%");
+                }
+            })->paginate(5);
+        } else {
+            return back()->with('info', 'no hay coincidencias en tu búsqueda');
+        }
+    }
+    
+    }
+

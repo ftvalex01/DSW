@@ -18,18 +18,28 @@ class CommunityLinkController extends Controller
         $this->communityLinksQuery = $communityLinksQuery;
     }
 
+ 
     public function index(Channel $channel = null)
     {
         $channels = Channel::orderBy('title', 'asc')->get();
-
         
-        $popular = request()->exists('popular');
-        $links = $this->communityLinksQuery->getByChannel($channel, $popular);
-
-       
+        $search = request()->input('search');
+        $popular = request()->exists('popular'); 
+    
+        if ($search) {
+            $search = trim($search);
+            $searchValues = preg_split('/\s+/', $search, -1, PREG_SPLIT_NO_EMPTY);
+            
+            $links = $this->communityLinksQuery->getSearch($searchValues);
+        } else if($search) {
+            $links = $this->communityLinksQuery->getByChannel($channel, $popular);
+        }
+        
+    
         return view('community/index', compact('links', 'channels', 'channel'))
             ->with('popular', $popular);
     }
+    
     
  
 

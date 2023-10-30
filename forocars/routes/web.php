@@ -38,3 +38,7 @@ Route::get('community/{channel:slug}', [App\Http\Controllers\CommunityLinkContro
 
 // Ruta para votar por el link
 Route::post('/votes/{link}',  [App\Http\Controllers\CommunityLinkUserController::class, 'store'])->middleware('auth','verified');
+
+// Ruta para el search
+
+Route::get('search', [App\Http\Controllers\CommunityLinkController::class, 'index'])->middleware('auth','verified')->name('search');

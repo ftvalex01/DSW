@@ -29,8 +29,10 @@
                 <a href="{{ $link->link }}" target="_blank">
                     {{ $link->title }}
                 </a>
+                
                 <small>Contributed by: <span class="black-text">{{ $link->creator->name }}</span>
                     {{ $link->updated_at->diffForHumans() }}</small>
+                    <i class="fa-regular fa-thumbs-up" style="color: #090a0b;margin-left:1rem"></i>
                 <form method="POST" action="/votes/{{ $link->id }}">
                     {{ csrf_field() }}
                     <button type="submit"
