@@ -36,7 +36,7 @@
                 <small>Contributed by: <span class="black-text">{{ $link->creator->name }}</span>
                     {{ $link->updated_at->diffForHumans() }}</small>
                     <i class="fa-regular fa-thumbs-up" style="color: #090a0b;margin-left:1rem"></i>
-                <form method="POST" action="/votes/{{ $link->id }}">
+                <form method="POST" action="/votes/{{ $link->id }}" class="form-style">
                     {{ csrf_field() }}
                     <button type="submit"
                         class="btn btn-secondary {{ Auth::check() && Auth::user()->votedFor($link) ? 'btn-success' : 'btn-secondary' }}"
