@@ -1,15 +1,28 @@
 .form-container {
-    max-width: 400px; /* Ancho máximo del contenedor */
-    margin: 0 auto; /* Centra el contenedor horizontalmente */
+    max-width: 400px;
+    margin: 0 auto;
     padding: 20px;
     background-color: #fff;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
 }
 
 .profile-image-container {
-    text-align: center;
     margin-bottom: 20px;
+    overflow: hidden; 
+    border-radius: 50%; 
+    width: 150px; 
+    height: 150px; 
+    margin: 0 auto; 
+}
+
+.profile-image-container img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto; 
+    border-radius: 50%; 
 }
 
 .profile-image-upload {

@@ -46,4 +46,4 @@ Route::get('search', [App\Http\Controllers\CommunityLinkController::class, 'inde
 //Ruta para el profile
 
 Route::get('/profile/edit',[App\Http\Controllers\ProfileController::class, 'edit'])->middleware('auth')->name('profile.edit');
-Route::post('/profile/store',[App\Http\Controllers\ProfileController::class, 'store'])->middleware('auth')->name('profile.edit');
+Route::post('/profile/store',[App\Http\Controllers\ProfileController::class, 'store'])->middleware('auth')->name('profile.store');

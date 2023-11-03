@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 
@@ -37,7 +37,16 @@ class ProfileController extends Controller
             'imageUpload.image' => 'El archivo debe ser una imagen.',
             'imageUpload.max' => 'El archivo no debe ser mayor de 200KB.',
         ]);
-        return redirect()->route('profile.edit')->with('success', 'Archivo subido exitosamente');
+        if ($request->imageUpload) {
+            $path = $request->file('imageUpload')->store('images', 'public');
+            
+            Profile::updateOrCreate(
+                ['user_id' => Auth::id()],
+                ['imageUpload' => $path]
+                );
+            return back()->with('success', "Your image has been uploaded.");
+            }
+        return back()->with('success', 'Archivo subido exitosamente');
     }
 
     /**
@@ -51,9 +60,15 @@ class ProfileController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Profile $profile)
+    public function edit()
     {
-        return view('profile.edit');
+        // Obtén el usuario actual
+        $user = Auth::user();
+    
+        // Puedes cargar el perfil relacionado si es necesario
+        $profile = $user->profile;
+    
+        return view('profile.edit', compact('user', 'profile'));
     }
 
     /**
