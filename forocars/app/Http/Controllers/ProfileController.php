@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Profile;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class ProfileController extends Controller
 {
@@ -28,6 +29,8 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
+        
+
         $request->validate([
             'imageUpload' => ['required','file', 'image', 'max:200'],
         ], 
@@ -38,15 +41,27 @@ class ProfileController extends Controller
             'imageUpload.max' => 'El archivo no debe ser mayor de 200KB.',
         ]);
         if ($request->imageUpload) {
-            $path = $request->file('imageUpload')->store('images', 'public');
             
+            //$path = $request->file('imageUpload')->store('images', 'public');
+            $requestImage = $request->file('imageUpload');
+            $img = Image::make($requestImage);
+
+            $img->resize(null, 400, function ($constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+            });
+
+            $name = $requestImage->hashName();
+            $path = config('filesystems.disks.public.root') . '/images/' . $name;
+            $img->save($path);
             Profile::updateOrCreate(
                 ['user_id' => Auth::id()],
-                ['imageUpload' => $path]
+                ['imageUpload' => 'images/' . $name]
                 );
+
             return back()->with('success', "Your image has been uploaded.");
             }
-        return back()->with('success', 'Archivo subido exitosamente');
+        return back()->with('error', 'Error al subir tu imagen');
     }
 
     /**
