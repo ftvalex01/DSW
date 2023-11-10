@@ -49,10 +49,8 @@ Route::get('/profile/edit',[App\Http\Controllers\ProfileController::class, 'edit
 Route::post('/profile/store',[App\Http\Controllers\ProfileController::class, 'store'])->middleware('auth')->name('profile.store');
 
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    
-    Route::resource('users', 'App\Http\Controllers\UserController');
-    Route::resource('profiles', 'App\Http\Controllers\ProfileController');
-    Route::resource('community_links', 'App\Http\Controllers\CommunityLinkController');
 
-});
+    
+Route::resource('users', 'App\Http\Controllers\UserController')->middleware('can:viewAny,App\Models\User');
+
+

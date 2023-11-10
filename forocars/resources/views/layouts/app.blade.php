@@ -37,7 +37,11 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <!-- Left Side Of Navbar -->
                         <ul class="navbar-nav me-auto">
-
+                            @can('viewAny','App\Models\User')
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ ('users') }}">Dashboard</a>
+                                </li>
+                            @endcan
                         </ul>
 
                         <!-- Right Side Of Navbar -->
