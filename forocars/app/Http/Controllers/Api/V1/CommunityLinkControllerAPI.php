@@ -18,25 +18,26 @@ class CommunityLinkControllerAPI extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {
-        // Búsqueda por variable text en la URL
-        if ($request->has('text')) {
-            $text = $request->input('text');
-            $links = CommunityLink::where('url', 'like', "%$text%")->get();
-            return response()->json(['Links' => $links], 200);
-        }
-
-        // Obtener los más populares
-        if ($request->has('popular')) {
-            $links = CommunityLink::withCount('users')->orderBy('users_count', 'desc')->get();
-            return response()->json(['Links' => $links], 200);
-        }
-
-        // Obtener todos los links
-        $links = CommunityLink::all();
-
+{
+    // Búsqueda por variable text en la URL
+    if ($request->has('text')) {
+        $text = $request->input('text');
+        $links = CommunityLink::where('url', 'like', "%$text%")->get();
         return response()->json(['Links' => $links], 200);
     }
+
+    // Obtener los más populares
+    if ($request->has('popular')) {
+        $links = CommunityLink::withCount('users')->orderBy('users_count', 'desc')->paginate(5);
+        return response()->json(['Links' => $links], 200);
+    }
+
+    // Obtener todos los links paginados
+    $links = CommunityLink::paginate(5);
+
+    return response()->json(['Links' => $links], 200);
+}
+
 
     /**
      * Store a newly created resource in storage.
