@@ -10,7 +10,7 @@ class CommunityLinksQuery
     public function getByChannel(Channel $channel = null, $popular = false, $search = null)
     {
         $query = CommunityLink::where('approved', true);
-
+        
         if ($channel !== null) {
             $query->where('channel_id', $channel->id);
         }

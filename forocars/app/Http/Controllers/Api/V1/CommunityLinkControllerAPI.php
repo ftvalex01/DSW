@@ -1,53 +1,41 @@
 <?php
 
-namespace App\Http\Controllers;
-
-use App\Models\Channel;
-use App\Models\CommunityLink;
-use App\Http\Requests\CommunityLinkForm;
+namespace App\Http\Controllers\Api\V1;
 use Illuminate\Http\Request;
+use App\Models\CommunityLink;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\CommunityLinkForm;
 use Illuminate\Support\Facades\Auth;
-use App\Queries\CommunityLinksQuery;
 
-class CommunityLinkController extends Controller
+class CommunityLinkControllerAPI extends Controller
 {
-    private $communityLinksQuery;
-
-    public function __construct(CommunityLinksQuery $communityLinksQuery)
+    public function __construct()
     {
-        $this->communityLinksQuery = $communityLinksQuery;
+        $this->middleware('auth:api', ['except' => ['index', 'show']]);
     }
-
- 
-    public function index(Channel $channel = null)
-    {
-        $channels = Channel::orderBy('title', 'asc')->get();
-        
-        $search = request()->input('search');
-        $popular = request()->exists('popular'); 
-    
-        if ($search) {
-            $search = trim($search);
-            $searchValues = preg_split('/\s+/', $search, -1, PREG_SPLIT_NO_EMPTY);
-            $links = $this->communityLinksQuery->getSearch($searchValues, $popular);
-        } else {
-            $links = $this->communityLinksQuery->getByChannel($channel, $popular);
-        }
-        
-        return view('community/index', compact('links', 'channels', 'channel'))
-            ->with('popular', $popular);
-    
-    }
-    
-    
- 
 
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
      */
-    public function create()
+    public function index(Request $request)
     {
-        //
+        // Búsqueda por variable text en la URL
+        if ($request->has('text')) {
+            $text = $request->input('text');
+            $links = CommunityLink::where('url', 'like', "%$text%")->get();
+            return response()->json(['Links' => $links], 200);
+        }
+
+        // Obtener los más populares
+        if ($request->has('popular')) {
+            $links = CommunityLink::withCount('users')->orderBy('users_count', 'desc')->get();
+            return response()->json(['Links' => $links], 200);
+        }
+
+        // Obtener todos los links
+        $links = CommunityLink::all();
+
+        return response()->json(['Links' => $links], 200);
     }
 
     /**
@@ -56,7 +44,7 @@ class CommunityLinkController extends Controller
     public function store(CommunityLinkForm $request)
     {
         // Validar los datos utilizando la request (CommunityLinkForm)
-        $data = $request->validated();
+    
     
         // Obtener si el usuario está aprobado
         $approved = Auth::user()->isTrusted();
@@ -95,21 +83,13 @@ class CommunityLinkController extends Controller
             }
         }
     }
-    
+
     /**
      * Display the specified resource.
      */
     public function show(CommunityLink $communityLink)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(CommunityLink $communityLink)
-    {
-        //
+        // Lógica para mostrar un enlace específico
     }
 
     /**
@@ -117,7 +97,7 @@ class CommunityLinkController extends Controller
      */
     public function update(Request $request, CommunityLink $communityLink)
     {
-        //
+        // Lógica para actualizar un enlace
     }
 
     /**
@@ -125,6 +105,7 @@ class CommunityLinkController extends Controller
      */
     public function destroy(CommunityLink $communityLink)
     {
-        //
+        // Lógica para eliminar un enlace
     }
 }
+
