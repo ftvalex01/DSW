@@ -79,11 +79,33 @@ class CommunityLinkControllerAPI extends Controller
         }
     }
     
-    public function show(CommunityLink $communityLink)
-    {
-        // Lógica para mostrar un enlace específico
+/*     public function show(CommunityLink $communityLink)
+{
+    if (!$communityLink) {
+        return response()->json(['errors' => (['code' => 404, 'message' => 'No se encuentra el community con ese código.'])], 404);
     }
 
+    return response()->json(['message' => 'ok', 'data' => $communityLink], 200);
+}
+ */
+    
+
+
+
+    public function show($id)
+    {
+        $communityLink = CommunityLink::find($id);
+
+        // Chequeamos si encontró o no el study
+        if (!$communityLink) {
+            // Se devuelve un array errors con los errores detectados y código 404
+            return response()->json(['errors' => (['code' => 404, 'message' => 'No se encuentra el community con ese código.'])], 404);
+        }
+
+        // Devolvemos la información encontrada.
+        return response()->json(['status' => 'ok', 'data' => $communityLink], 200);
+    } 
+ 
     /**
      * Update the specified resource in storage.
      */

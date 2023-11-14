@@ -29,7 +29,19 @@ class CommunityLink extends Model
     {
     return $this->belongsToMany(User::class, 'community_link_users');
     }
-  
+
+  /*   public function toArray()
+    {
+        return [
+            'channel_id' => $this->channel_id,
+            'title' => $this->title,
+            'link' => $this->link,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ];
+    }
+     */
+   
 
     public static function hasAlreadyBeenSubmitted($link)
     {
