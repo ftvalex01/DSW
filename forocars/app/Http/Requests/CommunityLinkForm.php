@@ -21,6 +21,7 @@ class CommunityLinkForm extends FormRequest
      */
     public function rules(): array
     {
+    
         return [
             'title' => 'required|max:255',
             'channel_id' => 'required|exists:channels,id',

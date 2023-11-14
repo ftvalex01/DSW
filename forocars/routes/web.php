@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -52,5 +53,9 @@ Route::post('/profile/store',[App\Http\Controllers\ProfileController::class, 'st
 
     
 Route::resource('users', 'App\Http\Controllers\UserController')->middleware('can:viewAny,App\Models\User');
+
+
+
+
 
 

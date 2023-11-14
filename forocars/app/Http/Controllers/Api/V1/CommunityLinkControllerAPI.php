@@ -18,26 +18,25 @@ class CommunityLinkControllerAPI extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-{
-    // Búsqueda por variable text en la URL
-    if ($request->has('text')) {
-        $text = $request->input('text');
-        $links = CommunityLink::where('url', 'like', "%$text%")->get();
+    {
+        // Búsqueda por variable text en la URL
+        if ($request->has('text')) {
+            $text = $request->input('text');
+            $links = CommunityLink::where('url', 'like', "%$text%")->get();
+            return response()->json(['Links' => $links], 200);
+        }
+
+        // Obtener los más populares
+        if ($request->has('popular')) {
+            $links = CommunityLink::withCount('users')->orderBy('users_count', 'desc')->paginate(5);
+            return response()->json(['Links' => $links], 200);
+        }
+
+        // Obtener todos los links paginados
+        $links = CommunityLink::paginate(5);
+
         return response()->json(['Links' => $links], 200);
     }
-
-    // Obtener los más populares
-    if ($request->has('popular')) {
-        $links = CommunityLink::withCount('users')->orderBy('users_count', 'desc')->paginate(5);
-        return response()->json(['Links' => $links], 200);
-    }
-
-    // Obtener todos los links paginados
-    $links = CommunityLink::paginate(5);
-
-    return response()->json(['Links' => $links], 200);
-}
-
 
     /**
      * Store a newly created resource in storage.
@@ -45,7 +44,7 @@ class CommunityLinkControllerAPI extends Controller
     public function store(CommunityLinkForm $request)
     {
         // Validar los datos utilizando la request (CommunityLinkForm)
-    
+        $data = $request->validated();
     
         // Obtener si el usuario está aprobado
         $approved = Auth::user()->isTrusted();
@@ -60,34 +59,26 @@ class CommunityLinkControllerAPI extends Controller
     
         // Verificar si el enlace ya ha sido enviado
         if ($link::hasAlreadyBeenSubmitted($data['link'])) {
-            // Usuario no confiable sube un enlace duplicado que ya ha sido aprobado
-            // No se actualizará el timestamp
-            if ($approved == false) {
-                return back()->with('info', 'El enlace ya está publicado y aprobado, pero usted es un usuario no verificado, por lo que no se actualizará en la lista');
+         
+            if ($data['approved']) {
+                return response()->json(['message' => ' El link se ha actualizado']);   
+            }else{
+                return response()->json(['message' => 'The link is already submitted and approved, but you are an untrusted user, so it will not be updated in the list'], 200);
             }
-    
-            // Usuario confiable sube un enlace duplicado que ya ha sido aprobado
-            // Se puede actualizar el timestamp
-            if ($approved == true) {
-                return back()->with('success', 'Item actualizado correctamente!');
-            } else {
-                return back()->with('info', 'Object successfully updated, waiting for a moderator to accept it');
-            }
+          
         } else {
-            // El enlace no ha sido enviado anteriormente, crear un nuevo enlace
-            $link::create($data);
+    
+            $link->fill($data);
+            $link->save();
     
             if ($approved == true) {
-                return back()->with('success', 'Item created successfully!');
+                return response()->json(['message' => 'Item created successfully!'], 201);
             } else {
-                return back()->with('info', 'Object successfully created, waiting for a moderator to accept it');
+                return response()->json(['message' => 'Object created successfully, waiting for a moderator to accept it'], 202);
             }
         }
     }
-
-    /**
-     * Display the specified resource.
-     */
+    
     public function show(CommunityLink $communityLink)
     {
         // Lógica para mostrar un enlace específico
@@ -109,4 +100,3 @@ class CommunityLinkControllerAPI extends Controller
         // Lógica para eliminar un enlace
     }
 }
-

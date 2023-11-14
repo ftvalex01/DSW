@@ -3,7 +3,7 @@
 
 use App\Http\Controllers\Api\V1\CommunityLinkControllerAPI;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Api\V1\LoginController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,3 +20,4 @@ use Illuminate\Support\Facades\Route;
 }); */
 
 Route::apiResource('v1/communitylinks', CommunityLinkControllerAPI::class)->middleware('api');
+Route::post('/login', [LoginController::class, 'login']);
