@@ -1,0 +1,30 @@
+created:
+    - app/Http/Controllers/VideoController.php
+    - app/Http/Controllers/CommentController.php
+    - app/Http/Controllers/Api/WatchController.php
+    - database/factories/VideoFactory.php
+    - database/factories/CommentFactory.php
+    - database/factories/WatchFactory.php
+    - database/migrations/2024_01_12_215641_create_videos_table.php
+    - database/migrations/2024_01_12_215642_create_comments_table.php
+    - database/migrations/2024_01_12_215643_create_watches_table.php
+    - app/Models/Video.php
+    - app/Models/Comment.php
+    - app/Models/Watch.php
+    - database/seeders/VideoSeeder.php
+    - database/seeders/CommentSeeder.php
+    - database/seeders/WatchSeeder.php
+    - tests/Feature/Http/Controllers/VideoControllerTest.php
+    - tests/Feature/Http/Controllers/CommentControllerTest.php
+    - tests/Feature/Http/Controllers/Api/WatchControllerTest.php
+updated:
+    - routes/web.php
+skipped:
+    - resources/views/video/index.blade.php
+    - resources/views/video/show.blade.php
+    - resources/views/comment/create.blade.php
+models:
+    User: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, remember_token: 'string:100 nullable' }
+    Video: { title: string, synopsis: 'longtext nullable', duration: 'decimal(8,2)', relationships: { hasMany: Comment } }
+    Comment: { user_id: id, video_id: id, content: longtext, approved: boolean }
+    Watch: { user_id: id, video_id: id, completed_at: datetime, timestamps: boolean }
