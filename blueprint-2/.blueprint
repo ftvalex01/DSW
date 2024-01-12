@@ -1,0 +1,60 @@
+created:
+    - app/Http/Controllers/ConferenceController.php
+    - app/Http/Controllers/VenueController.php
+    - app/Http/Controllers/SpeakerController.php
+    - app/Http/Controllers/TalkController.php
+    - database/factories/ConferenceFactory.php
+    - database/factories/VenueFactory.php
+    - database/factories/SpeakerFactory.php
+    - database/factories/TalkFactory.php
+    - database/migrations/2024_01_12_221402_create_conferences_table.php
+    - database/migrations/2024_01_12_221403_create_venues_table.php
+    - database/migrations/2024_01_12_221404_create_speakers_table.php
+    - database/migrations/2024_01_12_221405_create_talks_table.php
+    - database/migrations/2024_01_12_221406_create_conference_speaker_table.php
+    - database/migrations/2024_01_12_221407_create_conference_talk_table.php
+    - database/migrations/2024_01_12_221408_create_speaker_talk_table.php
+    - app/Models/Conference.php
+    - app/Models/Venue.php
+    - app/Models/Speaker.php
+    - app/Models/Talk.php
+    - database/seeders/ConferenceSeeder.php
+    - database/seeders/VenueSeeder.php
+    - database/seeders/SpeakerSeeder.php
+    - database/seeders/TalkSeeder.php
+    - tests/Feature/Http/Controllers/ConferenceControllerTest.php
+    - tests/Feature/Http/Controllers/VenueControllerTest.php
+    - tests/Feature/Http/Controllers/SpeakerControllerTest.php
+    - tests/Feature/Http/Controllers/TalkControllerTest.php
+    - app/Http/Requests/ConferenceStoreRequest.php
+    - app/Http/Requests/ConferenceUpdateRequest.php
+    - app/Http/Requests/VenueStoreRequest.php
+    - app/Http/Requests/VenueUpdateRequest.php
+    - app/Http/Requests/SpeakerStoreRequest.php
+    - app/Http/Requests/SpeakerUpdateRequest.php
+    - app/Http/Requests/TalkStoreRequest.php
+    - app/Http/Requests/TalkUpdateRequest.php
+    - resources/views/conference/index.blade.php
+    - resources/views/conference/create.blade.php
+    - resources/views/conference/show.blade.php
+    - resources/views/conference/edit.blade.php
+    - resources/views/venue/index.blade.php
+    - resources/views/venue/create.blade.php
+    - resources/views/venue/show.blade.php
+    - resources/views/venue/edit.blade.php
+    - resources/views/speaker/index.blade.php
+    - resources/views/speaker/create.blade.php
+    - resources/views/speaker/show.blade.php
+    - resources/views/speaker/edit.blade.php
+    - resources/views/talk/index.blade.php
+    - resources/views/talk/create.blade.php
+    - resources/views/talk/show.blade.php
+    - resources/views/talk/edit.blade.php
+updated:
+    - routes/web.php
+models:
+    User: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, remember_token: 'string:100 nullable' }
+    Conference: { name: string, city: string, country: string, postal_code: string, relationships: { hasMany: Venue, belongsToMany: 'Speaker, Talk' } }
+    Venue: { name: string, description: longtext, start_date: datetime, end_date: datetime, status: 'enum:finalizada,pendiente', region: string, conference_id: id }
+    Speaker: { name: string, email: string, biography: text, twitter: string, relationships: { hasMany: Talk, belongsToMany: Conference } }
+    Talk: { title: string, description: longtext, relationships: { belongsToMany: 'Speaker, Conference' } }
