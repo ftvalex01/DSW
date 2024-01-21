@@ -1,0 +1,15 @@
+created:
+    - database/factories/PostFactory.php
+    - database/factories/VideoFactory.php
+    - database/factories/CommentFactory.php
+    - database/migrations/2024_01_19_215053_create_posts_table.php
+    - database/migrations/2024_01_19_215054_create_videos_table.php
+    - database/migrations/2024_01_19_215055_create_comments_table.php
+    - app/Models/Post.php
+    - app/Models/Video.php
+    - app/Models/Comment.php
+models:
+    User: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, remember_token: 'string:100 nullable' }
+    Comment: { body: text, commentable_id: id, commentable_type: string, timestamps: timestamps, relationships: { morphTo: Commentable } }
+    Post: { name: string, relationships: { morphMany: Comment } }
+    Video: { name: string, relationships: { morphMany: Comment } }

@@ -1,0 +1,23 @@
+models:
+  
+  Post:
+    name: string
+    relationships:
+      morphMany: Comment
+
+  Video:
+    name: string
+    relationships:
+      morphMany: Comment
+      
+  Comment:
+    body: text
+    commentable_id: id
+    commentable_type: string
+    timestamps: true
+    relationships:
+      morphTo: Commentable
+
+
+controllers:
+ 
