@@ -42,9 +42,12 @@
             <x-primary-button class="ms-3">
                 {{ __('Log in') }}
             </x-primary-button>
-            <x-primary-button class="ms-3">
-                {{ __('Google') }}
-            </x-primary-button>
+            <x-button-link class="ms-4" href="/auth/redirect">
+                {{ __('Use GitHub') }}
+                </x-button-link>
+                <x-button-link class="ms-4" href="auth/google">
+                    {{ __('Use Google') }}
+                </x-button-link>
         </div>
     </form>
 </x-guest-layout>
