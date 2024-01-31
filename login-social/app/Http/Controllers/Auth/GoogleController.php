@@ -2,7 +2,7 @@
   
   namespace App\Http\Controllers\Auth;
   
-  use App\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
 use Exception;
 use App\Models\User;
